@@ -1,9 +1,18 @@
-import React,{useState} from "react";
+import React,{useState , useEffect} from "react";
+import { use } from "react";
 
 
 function To_Do_List(){
 
-    const [tasks,updateTasks] = useState([]);
+    const [tasks,updateTasks] = useState(() => {
+        const savedTasks = localStorage.getItem("tasks");
+        return savedTasks ? JSON.parse(savedTasks) : [] ;
+    });
+
+    useEffect(() => {
+        localStorage.setItem("tasks",JSON.stringify(tasks));
+    },[tasks]);
+
     const [task,updateTask] = useState("");
     const [description,updateDescription] = useState("");
     const [date,updateDate] = useState("");
@@ -60,6 +69,10 @@ function To_Do_List(){
 
     function handleDate(event){
         updateDate(event.target.value);
+    }
+
+    function IsPalindrom(name) {
+        
     }
 
     function goUp(index) {
